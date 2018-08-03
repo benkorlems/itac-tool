@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { searchUser } from "../../actions/searchActionCreators";
+import { Link } from "react-router-dom";
 
 class Search extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Search extends Component {
     this.state = {
       searchTerm: "",
       searchType: "",
-      searchResult: [],
+      searchResult: null,
       searching: false,
       errors: ""
     };
@@ -27,10 +28,10 @@ class Search extends Component {
   }  */
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.searchResult.length !== 0) {
+    if (nextProps.search.searchResult !== "") {
       this.setState({
         searchTerm: "",
-        searchResult: nextProps.searchResult
+        searchResult: nextProps.search.searchResult
       });
     }
 
@@ -53,7 +54,12 @@ class Search extends Component {
       searchTerm: e.target.value
     });
   }
+
+  result(res, index) {
+    return <div key={index}>{res}</div>;
+  }
   render() {
+    const result = this.props.search.searchResult;
     return (
       <fragment>
         <div className="form-div">
@@ -69,9 +75,15 @@ class Search extends Component {
             <input type="submit" className="" />
           </form>
         </div>
-        <div className="search-results">
-          <h2>{this.state.searchTerm}</h2>
-        </div>
+        <p>Search Results</p>
+        <hr />
+        {result ? (
+          <div className="search-results">
+            <Link to="/diagnostic">
+              {this.props.search.searchResult.freeside.name}
+            </Link>
+          </div>
+        ) : null}
       </fragment>
     );
   }
@@ -89,7 +101,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    search: bindActionCreators(searchUser, dispatch)
+    searchUser: bindActionCreators(searchUser, dispatch)
   };
 };
 

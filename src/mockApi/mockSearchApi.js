@@ -15,7 +15,7 @@ const users = [
       ont: ""
     },
     freeside: {
-      name: "",
+      name: "ebenezer",
       customer_id: "",
       last_billed: "",
       next_bill: "",
@@ -46,7 +46,7 @@ class searchUserApi {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const indexOfUserToGet = users.findIndex(
-          u => u.freeside.type == searchTerm
+          u => u.freeside.name == searchTerm
         );
         if (indexOfUserToGet >= 0) {
           resolve(users[indexOfUserToGet]);

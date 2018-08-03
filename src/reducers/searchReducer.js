@@ -1,24 +1,23 @@
 import isEmpty from "../validation/is-empty";
 
-import { SET_CURRENT_USER, AUTHENTICATING, GET_ERRORS } from "../actions/types";
+import { GET_ERRORS, SEARCHING, SEARCH_RESULT } from "../actions/types";
 
 const initialState = {
   searching: false,
-  searchResult: [],
-  errors: null
+  searchResult: "",
+  errors: ""
 };
-export default function authReducer(state = initialState, action) {
+export default function searchReducer(state = initialState, action) {
   switch (action.type) {
-    case AUTHENTICATING:
+    case SEARCHING:
       return {
         ...state,
-        authenticating: action.payload
+        searching: action.payload
       };
-    case SET_CURRENT_USER:
+    case SEARCH_RESULT:
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        searchResult: action.payload
       };
     case GET_ERRORS:
       return {
